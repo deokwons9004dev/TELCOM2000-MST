@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>MST Visualize</title>
+
+		<!-- Load StyleSheets -->
+		<link rel="stylesheet" href="./css/style.css">
+
+		<!-- Load External Libraries -->
+		<script src="./js/jquery.min.js"></script>
+		<script src="./js/sigma.js/src/sigma.core.js"></script>
+		<script src="./js/sigma.js/src/conrad.js"></script>
+		<script src="./js/sigma.js/src/utils/sigma.utils.js"></script>
+		<script src="./js/sigma.js/src/utils/sigma.polyfills.js"></script>
+		<script src="./js/sigma.js/src/sigma.settings.js"></script>
+		<script src="./js/sigma.js/src/classes/sigma.classes.dispatcher.js"></script>
+		<script src="./js/sigma.js/src/classes/sigma.classes.configurable.js"></script>
+		<script src="./js/sigma.js/src/classes/sigma.classes.graph.js"></script>
+		<script src="./js/sigma.js/src/classes/sigma.classes.camera.js"></script>
+		<script src="./js/sigma.js/src/classes/sigma.classes.quad.js"></script>
+		<script src="./js/sigma.js/src/classes/sigma.classes.edgequad.js"></script>
+		<script src="./js/sigma.js/src/captors/sigma.captors.mouse.js"></script>
+		<script src="./js/sigma.js/src/captors/sigma.captors.touch.js"></script>
+		<script src="./js/sigma.js/src/renderers/sigma.renderers.canvas.js"></script>
+		<script src="./js/sigma.js/src/renderers/sigma.renderers.webgl.js"></script>
+		<script src="./js/sigma.js/src/renderers/sigma.renderers.svg.js"></script>
+		<script src="./js/sigma.js/src/renderers/sigma.renderers.def.js"></script>
+		<script src="./js/sigma.js/src/renderers/webgl/sigma.webgl.nodes.def.js"></script>
+		<script src="./js/sigma.js/src/renderers/webgl/sigma.webgl.nodes.fast.js"></script>
+		<script src="./js/sigma.js/src/renderers/webgl/sigma.webgl.edges.def.js"></script>
+		<script src="./js/sigma.js/src/renderers/webgl/sigma.webgl.edges.fast.js"></script>
+		<script src="./js/sigma.js/src/renderers/webgl/sigma.webgl.edges.arrow.js"></script>
+		<script src="./js/sigma.js/src/renderers/canvas/sigma.canvas.labels.def.js"></script>
+		<script src="./js/sigma.js/src/renderers/canvas/sigma.canvas.hovers.def.js"></script>
+		<script src="./js/sigma.js/src/renderers/canvas/sigma.canvas.nodes.def.js"></script>
+		<script src="./js/sigma.js/src/renderers/canvas/sigma.canvas.edges.def.js"></script>
+		<script src="./js/sigma.js/src/renderers/canvas/sigma.canvas.edges.curve.js"></script>
+		<script src="./js/sigma.js/src/renderers/canvas/sigma.canvas.edges.arrow.js"></script>
+		<script src="./js/sigma.js/src/renderers/canvas/sigma.canvas.edges.curvedArrow.js"></script>
+		<script src="./js/sigma.js/src/renderers/canvas/sigma.canvas.edgehovers.def.js"></script>
+		<script src="./js/sigma.js/src/renderers/canvas/sigma.canvas.edgehovers.curve.js"></script>
+		<script src="./js/sigma.js/src/renderers/canvas/sigma.canvas.edgehovers.arrow.js"></script>
+		<script src="./js/sigma.js/src/renderers/canvas/sigma.canvas.edgehovers.curvedArrow.js"></script>
+		<script src="./js/sigma.js/src/renderers/canvas/sigma.canvas.extremities.def.js"></script>
+		<script src="./js/sigma.js/src/renderers/svg/sigma.svg.utils.js"></script>
+		<script src="./js/sigma.js/src/renderers/svg/sigma.svg.nodes.def.js"></script>
+		<script src="./js/sigma.js/src/renderers/svg/sigma.svg.edges.def.js"></script>
+		<script src="./js/sigma.js/src/renderers/svg/sigma.svg.edges.curve.js"></script>
+		<script src="./js/sigma.js/src/renderers/svg/sigma.svg.labels.def.js"></script>
+		<script src="./js/sigma.js/src/renderers/svg/sigma.svg.hovers.def.js"></script>
+		<script src="./js/sigma.js/src/middlewares/sigma.middlewares.rescale.js"></script>
+		<script src="./js/sigma.js/src/middlewares/sigma.middlewares.copy.js"></script>
+		<script src="./js/sigma.js/src/misc/sigma.misc.animation.js"></script>
+		<script src="./js/sigma.js/src/misc/sigma.misc.bindEvents.js"></script>
+		<script src="./js/sigma.js/src/misc/sigma.misc.bindDOMEvents.js"></script>
+		<script src="./js/sigma.js/src/misc/sigma.misc.drawHovers.js"></script>
+
+
+		<!-- Load Custom Scripts -->
+		<script src="./js/MiscTools.js"></script>
+		<script src="./js/MST.js"></script>
+		<script src="./js/MSTScript.js"></script>
+	</head>
+	<body>
+		<h6>Pick a starting vertex</h6>
+		
+		<button onclick="drawMST(0)">0 (RAND)</button>
+		<button onclick="drawMST(1)">1 (UCSB)</button>
+		<button onclick="drawMST(2)">2 (SU)</button>
+		<button onclick="drawMST(3)">3 (UCB)</button>
+		<button onclick="drawMST(4)">4 (SRI)</button>
+		<button onclick="drawMST(5)">5 (UCLA)</button>
+		<button onclick="drawMST(6)">6 (SDC)</button>
+		<button onclick="drawMST(7)">7 (UTAH)</button>
+		<button onclick="drawMST(8)">8 (WU)</button>
+		<button onclick="drawMST(9)">9 (ILL)</button>
+		<button onclick="drawMST(10)">10 (MICH)</button>
+		<button onclick="drawMST(11)">11 (CMU)</button>
+		<button onclick="drawMST(12)">12 (ARPA)</button>
+		<button onclick="drawMST(13)">13 (BTL)</button>
+		<button onclick="drawMST(14)">14 (HARV)</button>
+		<button onclick="drawMST(15)">15 (LL)</button>
+		<button onclick="drawMST(16)">16 (BBN)</button>
+		<button onclick="drawMST(17)">17 (MAC)</button>
+		<button onclick="drawMST(18)">18 (DART)</button>
+		
+		<div id="original"></div>
+	</body>
+</html>

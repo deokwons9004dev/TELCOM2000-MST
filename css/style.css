@@ -1,0 +1,26 @@
+/*#sigma-parent {*/
+/*	width: 500px;*/
+/*	height: 500px;*/
+/*	position: relative;*/
+/*}    */
+/**/
+/*#sigma-example {*/
+/*	position: absolute;*/
+/*	width: 100%;*/
+/*	height: 100%;*/
+/*}*/
+
+body {
+	margin: 0;
+}
+#original {
+	position: absolute;
+	top     : 100px;
+	left    : 50px;
+	width   : 90%;
+	height  : 90%;
+/*	overflow: visible;*/
+/*	padding : 20px;*/
+/*	box-sizing: border-box;*/
+	background: rgba(0,0,0,0.1);
+}
