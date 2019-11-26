@@ -46,95 +46,133 @@ var indexVertexMap = {
 }
 
 function drawMST (startIndex) {
-	
 	$('#original').empty();
 	
-	var s = new sigma('original');
+	// Compute the MST of the arpanet matrix based on the given starting index.
 	var mstMatrix = primMST(arpanetMatrix, startIndex);
+	
+	// Initialize sigma graph data.	
+	var g = { nodes: [], edges: [] };
+	
 	// Convert the AM nodes to sigma graph nodes.
-	for (var i = 0; i < mstMatrix.length; i++) {
-		// Here each i is the vertex index.
-		s.graph.addNode({
+	for (var i = 0; i < mstMatrix.length; i++) {		
+		g.nodes.push({
 			id   : i,
 			label: indexVertexMap[i].label,
 			x    : indexVertexMap[i].x,
 			y    : indexVertexMap[i].y,
 			size : 1,
 			color: '#f00'
-		});
+		})
 	}
 	// Create padding nodes to fit everything within container.
-	s.graph.addNode({
+	g.nodes.push({
 		id   : 99,
 		x    : 0,
 		y    : 8,
-	});
-	s.graph.addNode({
+	})
+	g.nodes.push({
 		id   : 100,
 		x    : 28,
 		y    : 8,
-	});
+	})
+	
 	// Convert the AM edges to sigma graph edges.
+	var edgeID = 0;
 	for (var i = 0; i < mstMatrix.length; i++) {
 		for (var j = 0; j < mstMatrix[i].length; j++) {
-			if (mstMatrix[i][j] > 0) 
-				s.graph.addEdge({
-					id: (i * mstMatrix.length) + j,
+			if (mstMatrix[i][j] > 0) {
+				g.edges.push({
+					id: edgeID,
 					// Reference extremities:
 					source: i,
-					target: j
+					target: j,
+					size  : mstMatrix[i][j],
+					label : mstMatrix[i][j].toString()
 				});
+				edgeID += 1;
+			}
 		}
 	}
 	
-	// Output.
-	s.refresh();
+	var s = new sigma({
+		graph: g,
+		renderer: {
+			container: document.getElementById('original'),
+			type     : 'canvas'
+		},
+		settings: {
+			edgeLabelSize: 'proportional',
+			defaultEdgeLabelSize: 15,
+			edgeLabelThreshold  : 0.1,
+			minEdgeSize  : 0.1,
+			maxEdgeSize  : 10
+		}
+	});
 }
 
 // =========================
 // Onload Routines
 // =========================
 $(document).ready(function () {
-	// Initialize Sigma Container.
-	var s = new sigma('original');
+	// Initialize sigma graph data.	
+	var g = { nodes: [], edges: [] };
 	
 	// Convert the AM nodes to sigma graph nodes.
-	for (var i = 0; i < arpanetMatrix.length; i++) {
-		// Here each i is the vertex index.
-		s.graph.addNode({
+	for (var i = 0; i < arpanetMatrix.length; i++) {		
+		g.nodes.push({
 			id   : i,
 			label: indexVertexMap[i].label,
 			x    : indexVertexMap[i].x,
 			y    : indexVertexMap[i].y,
 			size : 1,
 			color: '#f00'
-		});
+		})
 	}
 	// Create padding nodes to fit everything within container.
-	s.graph.addNode({
+	g.nodes.push({
 		id   : 99,
 		x    : 0,
 		y    : 8,
-	});
-	s.graph.addNode({
+	})
+	g.nodes.push({
 		id   : 100,
 		x    : 28,
 		y    : 8,
-	});
+	})
 	
 	// Convert the AM edges to sigma graph edges.
+	var edgeID = 0;
 	for (var i = 0; i < arpanetMatrix.length; i++) {
 		for (var j = 0; j < arpanetMatrix[i].length; j++) {
-			if (arpanetMatrix[i][j] > 0) 
-				s.graph.addEdge({
-					id: (i * arpanetMatrix.length) + j,
+			if (arpanetMatrix[i][j] > 0) {
+				g.edges.push({
+					id: edgeID,
 					// Reference extremities:
 					source: i,
-					target: j
+					target: j,
+					size  : arpanetMatrix[i][j],
+					label : arpanetMatrix[i][j].toString()
 				});
+				edgeID += 1;
+			}
 		}
 	}
 	
+	var s = new sigma({
+		graph: g,
+		renderer: {
+			container: document.getElementById('original'),
+			type     : 'canvas'
+		},
+		settings: {
+			edgeLabelSize: 'proportional',
+			defaultEdgeLabelSize: 15,
+			edgeLabelThreshold  : 0.1,
+			minEdgeSize  : 0.1,
+			maxEdgeSize  : 10
+		}
+	})
 	// Output.
-	s.refresh();
+//	s.refresh();
 });
