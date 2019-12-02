@@ -1,6 +1,5 @@
-
 // =========================
-// Graph Data
+// Global Graph Data
 // =========================
 var arpanetMatrix = [
 	[0,0.3,0,0,0,0,0.1,2,0,0,0,0,0,0,0,0,0,0,0],    // RAND
@@ -44,7 +43,23 @@ var indexVertexMap = {
 	17: { label: 'MAC' , x: 25, y: 5  },
 	18: { label: 'DART', x: 24, y: 3  }
 }
+var graph = null;
 
+// =========================
+// Button CLick Handlers
+// =========================
+function downloadPng () {
+	if (graph == null) {
+		alert('Graph is not rendered.');
+		return;
+	}
+	graph.renderers[0].snapshot({
+		format    : 'png',
+//		background: 'white',
+		labels    : false,
+		download  : true
+	});
+}
 function drawMST (startIndex) {
 	$('#original').empty();
 	
@@ -61,8 +76,8 @@ function drawMST (startIndex) {
 			label: indexVertexMap[i].label,
 			x    : indexVertexMap[i].x,
 			y    : indexVertexMap[i].y,
-			size : 1,
-			color: '#f00'
+			size : 1.5,
+			color: '#464646'
 		})
 	}
 	// Create padding nodes to fit everything within container.
@@ -88,7 +103,8 @@ function drawMST (startIndex) {
 					source: i,
 					target: j,
 					size  : mstMatrix[i][j],
-					label : mstMatrix[i][j].toString()
+					label : mstMatrix[i][j].toString(),
+					color : '#FF5B5B'
 				});
 				edgeID += 1;
 			}
@@ -105,10 +121,12 @@ function drawMST (startIndex) {
 			edgeLabelSize: 'proportional',
 			defaultEdgeLabelSize: 15,
 			edgeLabelThreshold  : 0.1,
-			minEdgeSize  : 0.1,
+			minEdgeSize  : 1,
 			maxEdgeSize  : 10
 		}
 	});
+	
+	graph = s;
 }
 
 // =========================
@@ -125,8 +143,8 @@ $(document).ready(function () {
 			label: indexVertexMap[i].label,
 			x    : indexVertexMap[i].x,
 			y    : indexVertexMap[i].y,
-			size : 1,
-			color: '#f00'
+			size : 1.5,
+			color: '#464646'
 		})
 	}
 	// Create padding nodes to fit everything within container.
@@ -152,7 +170,8 @@ $(document).ready(function () {
 					source: i,
 					target: j,
 					size  : arpanetMatrix[i][j],
-					label : arpanetMatrix[i][j].toString()
+					label : arpanetMatrix[i][j].toString(),
+					color : '#FF5B5B'
 				});
 				edgeID += 1;
 			}
@@ -169,10 +188,12 @@ $(document).ready(function () {
 			edgeLabelSize: 'proportional',
 			defaultEdgeLabelSize: 15,
 			edgeLabelThreshold  : 0.1,
-			minEdgeSize  : 0.1,
+			minEdgeSize  : 1,
 			maxEdgeSize  : 10
 		}
 	})
+	
+	graph = s;
 	// Output.
 //	s.refresh();
 });
